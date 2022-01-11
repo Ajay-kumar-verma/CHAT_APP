@@ -6,7 +6,9 @@ app.use(router);
 const io=require('socket.io')(server,{cors:{origin:'*',methods:["GET","POST"]}});
 
 io.on('connection',socket=>{
+
 socket.emit("WlCm","Welcome ...!");
+// This is will be sent for every new socket 
 
 socket.on('join',data=>{
  data.text="Joined the chat !";

@@ -1,14 +1,15 @@
 import React ,{useState,useEffect} from 'react';
 import queryString from 'query-string'
 import io  from "socket.io-client";
-import ScrollToBottom from 'react-scroll-to-bottom'
 let socket;
 
 const Chat=()=>{
 let [msg,setmsg]=useState("");
 let [name,setName]=useState("");
 let [room,setRoom]=useState("");
+
 const ENDPOINT='localhost:2000';
+
 let [msgList,setmsgList]=useState([]);
 
 useEffect(()=>{
@@ -17,9 +18,9 @@ useEffect(()=>{
 // console.log(name,room);
  setName(name); setRoom(room);
  socket= io(ENDPOINT);
- console.log(socket.id);
+//  console.log(socket.id);
  
- socket.emit('join',{room,name})
+socket.emit('join',{room,name})
    console.log("You joinned the chat !..");
  
 
@@ -44,9 +45,6 @@ useEffect(() => {
   setmsgList([...msgList,name+":~"+text]);
   //  console.log("bdcst msg recieved !");
  
-  
-   
-
    });
 
  },[msgList])
@@ -73,17 +71,15 @@ return;
 
 
 
-// document.querySelector('body').addEventListener('keypress', function (e) {
-//     if (e.key === 'Enter') {
-
-//    if(msg!==""){
-//    send(msg);
-//    }else{
-//        console.log("Empty message cant send... !");
-//    }
-       
-// }
-// });
+window.addEventListener('keypress', function (e){
+    if (e.key === 'Enter') {
+    if(msg!==""){
+    send(msg);
+    }else{
+       console.log("Empty message cant send... !");
+   }
+}
+});
 
 
 
