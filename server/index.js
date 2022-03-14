@@ -1,37 +1,18 @@
 const app=require('express')();
 const server=require('http').Server(app);
-const router=require('./router');
-app.use(router);
 
 const io=require('socket.io')(server,{cors:{origin:'*',methods:["GET","POST"]}});
 
 io.on('connection',socket=>{
 
-socket.emit("WlCm","Welcome ...!");
+console.log("new user connected..!",socket.id);
+ socket.emit("WlCm","Welcome ...!");
 // This is will be sent for every new socket 
-
-socket.on('join',data=>{
- data.text="Joined the chat !";
- let {room}=data;
- socket.join(room);
- socket.broadcast.to(room).emit('bdCtMg',data);
- console.log(socket.id,"Joined the room");
- })
-
-
-
-socket.on('msg',data=>
-{   let {room}=data;
- socket.broadcast.to(room).emit('bdCtMg',data);
-// console.log(msg,"Recieve for BroadCast !");
-// socket.broadcast.emit("bdCtMg",msg)
-//  if(socket.broadcast.emit("bdCtMg",msg))
-//  {   
-// console.log('Message  Sent from server');
-//  }
  
-})
-
+ socket.on("msg",(val=>{
+   console.log(val);
+   socket.broadcast.emit("receive",val);
+  }))
 
 // WHEN DISCONNECT
 socket.on('disconnect',()=>
@@ -41,8 +22,6 @@ socket.on('disconnect',()=>
 
 
 }) 
-
-
 
 // SERVER
 server.listen('2000',()=>{

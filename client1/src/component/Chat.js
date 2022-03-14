@@ -1,4 +1,5 @@
 import React ,{useState,useEffect} from 'react';
+
 import queryString from 'query-string'
 import io  from "socket.io-client";
 let socket;
@@ -30,7 +31,6 @@ socket.emit('join',{room,name})
     setmsgList([...msgList,data]);
     console.log("welcome msg recieved ...!");
    })
-
    
 },[ENDPOINT,window.location.search])   
 
@@ -38,8 +38,7 @@ socket.emit('join',{room,name})
 
 useEffect(() => {
   socket.on("bdCtMg",data=>{
- 
-     console.log("bdCtMg msg called ...!") 
+      console.log("bdCtMg msg called ...!") 
    if(data.room!=room){return;}
    let {name,text}=data;
   setmsgList([...msgList,name+":~"+text]);
@@ -50,13 +49,6 @@ useEffect(() => {
  },[msgList])
 
  
-
-
-
-
-
-
-
 
 
 const  send=(text)=>
@@ -107,3 +99,5 @@ onClick={e=>msg?(send(msg),setmsg("")):
 }
 
 export default Chat;
+
+
