@@ -15,13 +15,14 @@ const text=(e)=>{
   }
 
 const Send=()=>{
-  if(val==="") return;
+  if(val=="") return;
  setmsg([...msg,{mine:true,val:val}]); 
  let cipher =Encp_Decyp.En(val,key,type)
  
  socket.emit("msg",cipher);
- console.log(val," msg sent ");
- setval("");  
+
+ //console.log(val," msg sent ");
+setval("");  
  } 
  
  socket.on("receive",cipher=>{
@@ -33,7 +34,7 @@ const Send=()=>{
  return (
   <>
   <VStack w="100%" h="99vh" bg="#D3D3D3">
-  <Center w="90%" h="10vh" bg="white" color="blue" fontSize={40} pl={15} pr={15}  > Secure Chat web Site
+      <Center w="90%" h="10vh" bg="white" color="blue" fontSize={40} pl={15} pr={15}  > Secure Chat web Site
  </Center>
 
  <HStack w="90%" h="10vh" bg="white" color="blue" pl={15} pr={15}  >
@@ -45,7 +46,8 @@ const Send=()=>{
       <option value='t2'>type2</option>
      </Select>
 
-
+    <Center w="100%">Before starting chat please set type and key  for encrption   </Center>
+      
       <Input placeholder="Enter key "
               type={type==='t1'?'number':"text"}  
       onChange={(e)=>{setkey(e.target.value)}}
@@ -157,7 +159,7 @@ class Encp_Decyp{
      if(type==="t2")
      return Encp_Decyp.t2En(text,key+"1234");
      else 
-      return "error"; "1234"
+      return "error"; 
    }  
    static De(text,key,type){
      if(type==="t1")  
